@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friends O' Flembot - Hall of Champions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .tab-btn.active { background: linear-gradient(to right, #ca8a04, #f59e0b); color: black; }
+        .record-btn.active { background: #ca8a04; color: black; }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+    
+    <!-- Header -->
+    <div class="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-yellow-600/20 via-transparent to-yellow-600/20"></div>
+        <div class="relative px-6 py-12 text-center">
+            <div class="flex justify-center mb-4">
+                <div class="text-6xl">🏆</div>
+            </div>
+            <h1 class="text-5xl font-black tracking-tight mb-2" style="font-family: Impact, sans-serif;">
+                FRIENDS O' FLEMBOT
+            </h1>
+            <h2 class="text-2xl font-bold text-yellow-500 tracking-widest mb-2">
+                HALL OF CHAMPIONS
+            </h2>
+            <p class="text-gray-400 text-lg">Est. 2006 • 20 Seasons of Glory & Pain</p>
+            
+            <!-- Belt decoration -->
+            <div class="flex justify-center items-center gap-2 mt-6">
+                <div class="h-1 w-16 bg-gradient-to-r from-transparent to-yellow-600"></div>
+                <div class="w-4 h-4 bg-yellow-500 rotate-45"></div>
+                <div class="h-1 w-32 bg-yellow-600"></div>
+                <div class="w-4 h-4 bg-yellow-500 rotate-45"></div>
+                <div class="h-1 w-16 bg-gradient-to-l from-transparent to-yellow-600"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="sticky top-0 z-50 bg-black/90 backdrop-blur border-b border-yellow-600/30">
+        <div class="flex justify-center gap-1 p-2 overflow-x-auto">
+            <button onclick="showTab('champions')" class="tab-btn active px-4 py-3 rounded-lg font-bold text-sm transition-all whitespace-nowrap bg-gray-800 text-gray-300 hover:bg-gray-700">🏆 Champions</button>
+            <button onclick="showTab('dynasty')" class="tab-btn px-4 py-3 rounded-lg font-bold text-sm transition-all whitespace-nowrap bg-gray-800 text-gray-300 hover:bg-gray-700">👑 Dynasty</button>
+            <button onclick="showTab('records')" class="tab-btn px-4 py-3 rounded-lg font-bold text-sm transition-all whitespace-nowrap bg-gray-800 text-gray-300 hover:bg-gray-700">📚 Records</button>
+            <button onclick="showTab('season2025')" class="tab-btn px-4 py-3 rounded-lg font-bold text-sm transition-all whitespace-nowrap bg-gray-800 text-gray-300 hover:bg-gray-700">📊 2025</button>
+            <button onclick="showTab('shame')" class="tab-btn px-4 py-3 rounded-lg font-bold text-sm transition-all whitespace-nowrap bg-gray-800 text-gray-300 hover:bg-gray-700">💀 Shame</button>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        
+        <!-- Champions Tab -->
+        <div id="champions" class="tab-content active space-y-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-yellow-500">CHAMPIONSHIP HISTORY</h2>
+                <p class="text-gray-400">20 Years of Fantasy Football Dominance</p>
+            </div>
+            
+            <div class="grid gap-3" id="champions-list"></div>
+        </div>
+
+        <!-- Dynasty Tab -->
+        <div id="dynasty" class="tab-content space-y-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-yellow-500">DYNASTY POWER RANKINGS</h2>
+                <p class="text-gray-400">All-Time Greatest Champions (Active Members)</p>
+            </div>
+            <div class="space-y-4" id="dynasty-list"></div>
+        </div>
+
+        <!-- Records Tab -->
+        <div id="records" class="tab-content space-y-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-yellow-500">📚 RECORD BOOK</h2>
+                <p class="text-gray-400">All-Time League Records</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-2 mb-6">
+                <button onclick="showRecords('teamPoints')" class="record-btn active px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Team Points</button>
+                <button onclick="showRecords('offensivePoints')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Offensive Pts</button>
+                <button onclick="showRecords('touchdowns')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Touchdowns</button>
+                <button onclick="showRecords('passingYards')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Passing Yards</button>
+                <button onclick="showRecords('rushingYards')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Rushing Yards</button>
+                <button onclick="showRecords('receivingYards')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Receiving Yards</button>
+                <button onclick="showRecords('fieldGoals')" class="record-btn px-3 py-2 rounded-lg text-sm font-bold transition-all bg-gray-800 text-gray-300 hover:bg-gray-700">Field Goals</button>
+            </div>
+            
+            <div id="records-content" class="grid md:grid-cols-2 gap-6"></div>
+        </div>
+
+        <!-- 2025 Season Tab -->
+        <div id="season2025" class="tab-content space-y-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-yellow-500">2025 SEASON RECAP</h2>
+                <p class="text-gray-400">Babo's 5th Championship Run</p>
+            </div>
+
+            <!-- Championship Result -->
+            <div class="bg-gradient-to-r from-yellow-900/40 via-amber-900/30 to-yellow-900/40 rounded-xl border border-yellow-600 p-6 text-center">
+                <div class="text-6xl mb-4">🏆</div>
+                <h3 class="text-2xl font-black text-yellow-400 mb-2">2025 CHAMPION</h3>
+                <div class="text-4xl font-black text-white mb-2">UNCLE NICO (BABO)</div>
+                <div class="text-xl text-gray-300">defeats Pizza fuckers anonymous (ZM)</div>
+                <div class="text-2xl font-bold text-yellow-500 mt-2">140.07 - 120.57</div>
+                <div class="mt-4 text-sm text-gray-400">
+                    Bijan Robinson (40.40) + CMC (29.10) = Championship
+                </div>
+            </div>
+
+            <!-- Playoff Bracket -->
+            <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                <h3 class="text-xl font-bold text-yellow-500 mb-4 text-center">PLAYOFF BRACKET</h3>
+                <div class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                            <div class="text-xs text-gray-500 uppercase mb-2">Semifinal 1</div>
+                            <div class="font-bold text-green-400">Pizza fuckers (ZM) - 134.36 ✓</div>
+                            <div class="text-gray-400">The OG JG (Jason) - 115.29</div>
+                        </div>
+                        <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                            <div class="text-xs text-gray-500 uppercase mb-2">Semifinal 2</div>
+                            <div class="font-bold text-green-400">Uncle Nico (Babo) - 172.73 ✓</div>
+                            <div class="text-gray-400">Funk Soul Brothers (Alex) - 119.28</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="bg-yellow-900/30 rounded-lg p-4 border border-yellow-600">
+                            <div class="text-xs text-yellow-500 uppercase mb-2">🏆 Championship</div>
+                            <div class="font-bold text-yellow-400">Uncle Nico (Babo) - 140.07 ✓</div>
+                            <div class="text-gray-400">Pizza fuckers (ZM) - 120.57</div>
+                        </div>
+                        <div class="bg-amber-900/20 rounded-lg p-4 border border-amber-700">
+                            <div class="text-xs text-amber-500 uppercase mb-2">🥉 3rd Place</div>
+                            <div class="font-bold text-amber-400">Funk Soul Brothers (Alex) - 126.73 ✓</div>
+                            <div class="text-gray-400">The OG JG (Jason) - 124.24</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Standings -->
+            <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                <h3 class="text-xl font-bold text-yellow-500 mb-4">FINAL STANDINGS</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-gray-400 border-b border-gray-700">
+                                <th class="pb-2 pr-4">#</th>
+                                <th class="pb-2 pr-4">Team</th>
+                                <th class="pb-2 pr-4">Owner</th>
+                                <th class="pb-2 pr-4">Record</th>
+                                <th class="pb-2 pr-4">PF</th>
+                                <th class="pb-2">Result</th>
+                            </tr>
+                        </thead>
+                        <tbody id="standings-table"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Weekly High Scores -->
+            <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                <h3 class="text-xl font-bold text-yellow-500 mb-4">WEEKLY HIGH SCORES ($45/week)</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2" id="weekly-highs"></div>
+                
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="bg-yellow-900/30 rounded-lg p-4 border border-yellow-600 text-center">
+                        <div class="text-3xl font-black text-yellow-400">6</div>
+                        <div class="text-sm text-gray-300">Babo</div>
+                        <div class="text-xs text-yellow-500">$270</div>
+                    </div>
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-600 text-center">
+                        <div class="text-3xl font-black text-gray-300">3</div>
+                        <div class="text-sm text-gray-300">Alex</div>
+                        <div class="text-xs text-gray-400">$135</div>
+                    </div>
+                    <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-600 text-center">
+                        <div class="text-3xl font-black text-gray-300">2</div>
+                        <div class="text-sm text-gray-300">Aguirre</div>
+                        <div class="text-xs text-gray-400">$90</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Babo Pool -->
+            <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                <h3 class="text-xl font-bold text-yellow-500 mb-4">THE BABO PLAYOFF POOL</h3>
+                <p class="text-sm text-gray-400 mb-4">Pick 1 QB, 1 RB, 1 WR - locked for playoff weeks. Last place (Seth) pays $50 to winner.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="text-left text-gray-400 border-b border-gray-700">
+                                <th class="pb-2 pr-4">#</th>
+                                <th class="pb-2 pr-4">Owner</th>
+                                <th class="pb-2 pr-4">QB</th>
+                                <th class="pb-2 pr-4">RB</th>
+                                <th class="pb-2 pr-4">WR/TE</th>
+                                <th class="pb-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="babo-pool-table"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Payouts -->
+            <div class="bg-gradient-to-r from-green-900/30 to-emerald-900/30 rounded-xl border border-green-700 p-6">
+                <h3 class="text-xl font-bold text-green-400 mb-4">💰 2025 PAYOUTS</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="payouts-grid"></div>
+                <div class="mt-6 text-center bg-yellow-900/30 rounded-lg p-4 border border-yellow-600">
+                    <div class="text-sm text-gray-400">BABO'S TOTAL HAUL</div>
+                    <div class="text-4xl font-black text-yellow-400">$1,810</div>
+                    <div class="text-xs text-gray-500">Championship ($1,490) + Weekly High x6 ($270) + Babo Pool ($50)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hall of Shame Tab -->
+        <div id="shame" class="tab-content space-y-6">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-black text-red-500">HALL OF SHAME</h2>
+                <p class="text-gray-400">Where Dreams Go to Die</p>
+            </div>
+
+            <div class="space-y-4">
+                <h3 class="text-xl font-bold text-red-400">2025 VICTIMS</h3>
+                
+                <div class="bg-red-900/20 rounded-xl border border-red-800 p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-4xl">💀</div>
+                        <div>
+                            <div class="text-xl font-black text-red-400">THE SCHEDULE VICTIM AWARD</div>
+                            <div class="text-2xl font-bold text-white">Joe D (Can You Digg It?)</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 text-center mb-4">
+                        <div class="bg-gray-900/50 rounded-lg p-3">
+                            <div class="text-2xl font-black text-red-400">3-11</div>
+                            <div class="text-xs text-gray-400">Record</div>
+                        </div>
+                        <div class="bg-gray-900/50 rounded-lg p-3">
+                            <div class="text-2xl font-black text-white">1,698.30</div>
+                            <div class="text-xs text-gray-400">Points For</div>
+                        </div>
+                        <div class="bg-gray-900/50 rounded-lg p-3">
+                            <div class="text-2xl font-black text-yellow-400">6th</div>
+                            <div class="text-xs text-gray-400">Points Rank</div>
+                        </div>
+                    </div>
+                    <div class="text-center text-gray-300">
+                        Scored more points than <span class="text-red-400 font-bold">6 OTHER TEAMS</span> and still finished dead last. 
+                        The fantasy gods hate this man.
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-4xl">📉</div>
+                        <div>
+                            <div class="text-xl font-black text-gray-400">FALL FROM GRACE AWARD</div>
+                            <div class="text-2xl font-bold text-white">Seigle (The Slim Reapers)</div>
+                        </div>
+                    </div>
+                    <div class="text-gray-300">
+                        <span class="text-yellow-400 font-bold">2024 Champion</span> → 
+                        <span class="text-red-400 font-bold"> 10th Place</span> (5-9). 
+                        Lost 6 straight games. His Babo Pool picks (Mahomes/Saquon/Jefferson) scored <span class="text-red-400 font-bold">81.13 points</span> — DEAD LAST.
+                    </div>
+                </div>
+
+                <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="text-4xl">🦬</div>
+                        <div>
+                            <div class="text-xl font-black text-blue-400">BUFFALO BILLS LIFETIME ACHIEVEMENT</div>
+                            <div class="text-2xl font-bold text-white">Alex (The Funk Soul Brothers)</div>
+                        </div>
+                    </div>
+                    <div class="text-gray-300">
+                        <span class="text-red-400 font-bold">6 CAREER RUNNER-UPS</span> (2007, 2016, 2017, 2018, 2019, 2021). 
+                        Only <span class="text-yellow-400">1 championship</span> (2019). 
+                        This year: 10-4, 3rd most points, lost bye on tiebreaker, beat in semis by Babo's 172-point explosion.
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-800/50 rounded-xl border border-gray-700 p-6">
+                <h3 class="text-xl font-bold text-red-400 mb-4">ALL-TIME SHAME RECORDS</h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Most Runner-Ups (Career)</span>
+                        <span class="font-bold text-red-400">Alex - 6</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Worst Points Luck (2025)</span>
+                        <span class="font-bold text-red-400">Joe D - 6th in PF, 12th in Wins</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2 border-b border-gray-700">
+                        <span class="text-gray-400">Biggest Champ-to-Chump Fall (2025)</span>
+                        <span class="font-bold text-red-400">Seigle - 1st → 10th</span>
+                    </div>
+                    <div class="flex justify-between items-center py-2">
+                        <span class="text-gray-400">Longest Title Drought (Active)</span>
+                        <span class="font-bold text-red-400">ZM - 16 years (2009)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="border-t border-gray-800 mt-12 py-8 text-center text-gray-500 text-sm">
+        <p>Friends O' Flembot League • Est. 2006</p>
+        <p class="mt-1">Where friendships go to die every Sunday</p>
+        <p class="mt-2 text-xs text-gray-600">Last updated: 2025 Season</p>
+    </div>
+
+    <script>
+        // Data
+        const champions = [
+            { year: 2025, champion: 'Babo', runnerUp: 'ZM', championTitles: 5, note: 'Dynasty continues' },
+            { year: 2024, champion: 'Seigle', runnerUp: 'Jon Goodman', championTitles: 3, note: '' },
+            { year: 2023, champion: 'Babo', runnerUp: 'Joe D', championTitles: 4, note: '' },
+            { year: 2022, champion: 'Josh Gottlieb', runnerUp: 'Jason Goodman', championTitles: 1, note: '' },
+            { year: 2021, champion: 'Seigle', runnerUp: 'Alex', championTitles: 2, note: '' },
+            { year: 2020, champion: 'Seigle', runnerUp: 'ZM', championTitles: 1, note: '' },
+            { year: 2019, champion: 'Alex', runnerUp: 'Aguirre', championTitles: 1, note: 'Only title' },
+            { year: 2018, champion: 'Babo', runnerUp: 'Alex', championTitles: 3, note: 'THREE-PEAT' },
+            { year: 2017, champion: 'Babo', runnerUp: 'Alex', championTitles: 2, note: '' },
+            { year: 2016, champion: 'Babo', runnerUp: 'Alex', championTitles: 1, note: 'Dynasty begins' },
+            { year: 2015, champion: 'Jelly', runnerUp: 'ZM', championTitles: 1, note: '' },
+            { year: 2014, champion: 'Goodies', runnerUp: 'Babo', championTitles: 1, note: '' },
+            { year: 2013, champion: 'Seth', runnerUp: 'Babo', championTitles: 2, note: '' },
+            { year: 2012, champion: 'Haskell', runnerUp: 'Brian Fleming', championTitles: 1, note: '' },
+            { year: 2011, champion: 'KP', runnerUp: 'Brian Fleming', championTitles: 1, note: '' },
+            { year: 2010, champion: 'Brian Fleming', runnerUp: 'KP', championTitles: 1, note: 'The OG Flembot' },
+            { year: 2009, champion: 'ZM', runnerUp: 'Mike M', championTitles: 2, note: '' },
+            { year: 2008, champion: 'Seth', runnerUp: 'Jelly', championTitles: 1, note: '' },
+            { year: 2007, champion: 'ZM', runnerUp: 'Alex', championTitles: 1, note: '' },
+            { year: 2006, champion: 'Mark M', runnerUp: 'Mike M', championTitles: 1, note: 'First ever champ' },
+        ];
+
+        const dynastyRankings = [
+            { name: 'Babo', titles: 5, years: '2016, 2017, 2018, 2023, 2025', runnerUps: 2, tier: 'GOAT', highlight: 'Three-peat (16-18)' },
+            { name: 'Seigle', titles: 3, years: '2020, 2021, 2024', runnerUps: 0, tier: 'ELITE', highlight: 'Back-to-back' },
+            { name: 'ZM', titles: 2, years: '2007, 2009', runnerUps: 3, tier: 'ELITE', highlight: '16-year drought' },
+            { name: 'Seth', titles: 2, years: '2008, 2013', runnerUps: 0, tier: 'ELITE', highlight: '' },
+            { name: 'Alex', titles: 1, years: '2019', runnerUps: 6, tier: 'BUFFALO BILLS', highlight: '6 runner-ups' },
+            { name: 'KP', titles: 1, years: '2011', runnerUps: 1, tier: 'ONE-TIMER', highlight: '' },
+            { name: 'Haskell', titles: 1, years: '2012', runnerUps: 0, tier: 'ONE-TIMER', highlight: '' },
+            { name: 'Goodies', titles: 1, years: '2014', runnerUps: 0, tier: 'ONE-TIMER', highlight: '' },
+            { name: 'Jelly', titles: 1, years: '2015', runnerUps: 1, tier: 'ONE-TIMER', highlight: '' },
+            { name: 'Josh Gottlieb', titles: 1, years: '2022', runnerUps: 0, tier: 'ONE-TIMER', highlight: '' },
+            { name: 'Jon Goodman', titles: 0, years: '-', runnerUps: 1, tier: 'STILL SEARCHING', highlight: '2024 Runner-Up' },
+            { name: 'Aguirre', titles: 0, years: '-', runnerUps: 1, tier: 'STILL SEARCHING', highlight: '2019 Runner-Up' },
+            { name: 'Joe D', titles: 0, years: '-', runnerUps: 1, tier: 'STILL SEARCHING', highlight: '2023 Runner-Up' },
+            { name: 'Jason', titles: 0, years: '-', runnerUps: 1, tier: 'STILL SEARCHING', highlight: '2022 Runner-Up' },
+            { name: 'Tom', titles: 0, years: '-', runnerUps: 0, tier: 'RINGLESS', highlight: '' },
+            { name: 'Josh', titles: 0, years: '-', runnerUps: 0, tier: 'RINGLESS', highlight: '' },
+        ];
+
+        const records = {
+            teamPoints: {
+                most: [
+                    { record: 'Single Week', holder: 'Uncle Nico vs. The OG JG', context: 'Week 2', points: '171.37' },
+                    { record: 'Single Week, All Time', holder: 'TopicalNFLStory+Pun vs. The Disgusting Brothers', context: 'Week 3, Season 2023', points: '237.91' },
+                    { record: 'Season (Average)', holder: 'TopicalNFLStory+Pun', context: '', points: '282.29 (141.14)' },
+                    { record: 'Season, All Time', holder: 'president Donaldduck', context: 'Season 2015', points: '2470' },
+                ],
+                least: [
+                    { record: 'Single Week', holder: 'D+ Draft vs. Pizza fuckers anonymous', context: 'Week 2', points: '76.80' },
+                    { record: 'Single Week, All Time', holder: 'TopicalNFLStory+Pun vs. Touchdown in London Town', context: 'Week 3, Season 2024', points: '46.34' },
+                    { record: 'Season (Average)', holder: 'D+ Draft (Poor Preparation)', context: '', points: '174.73 (87.36)' },
+                    { record: 'Season, All Time', holder: 'The Funk Soul Brothers', context: 'Season 2025', points: '91' },
+                ]
+            },
+            offensivePoints: {
+                most: [
+                    { record: 'Single Week', holder: 'Uncle Nico vs. The OG JG', context: 'Week 2', points: '144.33' },
+                    { record: 'Single Week, All Time', holder: 'TopicalNFLStory+Pun vs. The Disgusting Brothers', context: 'Week 3, Season 2023', points: '208.31' },
+                    { record: 'Season (Average)', holder: 'Autodraft', context: '', points: '244.02 (122.01)' },
+                    { record: 'Season, All Time', holder: 'president Donaldduck', context: 'Season 2015', points: '2134' },
+                ],
+                least: []
+            },
+            touchdowns: {
+                most: [
+                    { record: 'Single Week', holder: 'Autodraft vs. D+ Draft / Uncle Nico vs. The OG JG', context: 'Week 1 / Week 2', points: '8' },
+                    { record: 'Single Week, All Time', holder: "Josh's Chubb vs. The OG JG", context: 'Week 14, Season 2024', points: '17' },
+                    { record: 'Season (Average)', holder: 'Autodraft', context: '', points: '15 (7.5)' },
+                    { record: 'Season, All Time', holder: 'Not My Commissioner', context: 'Season 2018', points: '114' },
+                ],
+                least: []
+            },
+            passingYards: {
+                most: [
+                    { record: 'Single Week', holder: 'The OG JG vs. TopicalNFLStory+Pun', context: 'Week 1', points: '394' },
+                    { record: 'Single Week, All Time', holder: "Wait till Next Year vs. Cam's Money", context: 'Week 11, Season 2012', points: '527' },
+                    { record: 'Season (Average)', holder: 'Uncle Nico', context: '', points: '549 (274.5)' },
+                    { record: 'Season, All Time', holder: 'Hasknado', context: 'Season 2013', points: '5335' },
+                ],
+                least: []
+            },
+            rushingYards: {
+                most: [
+                    { record: 'Single Week', holder: "Keep On Keepin' Keepers vs. Autodraft", context: 'Week 2', points: '333' },
+                    { record: 'Single Week, All Time', holder: "Lynchs Skittle Snack vs. Dongin' it!", context: 'Week 9, Season 2012', points: '492' },
+                    { record: 'Season (Average)', holder: 'Pizza fuckers anonymous', context: '', points: '514 (257)' },
+                    { record: 'Season, All Time', holder: 'The Slim Reapers', context: 'Season 2024', points: '4486' },
+                ],
+                least: []
+            },
+            receivingYards: {
+                most: [
+                    { record: 'Single Week', holder: 'The OG JG vs. Uncle Nico', context: 'Week 2', points: '474' },
+                    { record: 'Single Week, All Time', holder: 'TopicalNFLStory+Pun vs. The Disgusting Brothers', context: 'Week 3, Season 2023', points: '688' },
+                    { record: 'Season (Average)', holder: 'The OG JG', context: '', points: '880 (440)' },
+                    { record: 'Season, All Time', holder: 'Chubb of the Year', context: 'Season 2023', points: '6672' },
+                ],
+                least: []
+            },
+            fieldGoals: {
+                most: [
+                    { record: 'Single Week', holder: "Funk Soul Brothers vs. Josh's Chubb / D+ Draft vs. Autodraft", context: 'Week 2 / Week 1', points: '4' },
+                    { record: 'Single Week, All Time', holder: "Zach's Favorite Jew vs. Josh's Chubb", context: 'Week 1, Season 2024', points: '6' },
+                    { record: 'Season (Average)', holder: 'Funk Soul Brothers / D+ Draft', context: '', points: '6 (3)' },
+                    { record: 'Season, All Time', holder: 'The Slim Reapers', context: 'Season 2024', points: '40' },
+                ],
+                least: []
+            }
+        };
+
+        const standings = [
+            { rank: 1, team: 'Pizza fuckers anonymous', owner: 'ZM', record: '12-2-0', pf: 1798.00, result: 'Runner-Up' },
+            { rank: 2, team: 'Uncle Nico', owner: 'Babo', record: '10-4-0', pf: 2084.33, result: 'CHAMPION' },
+            { rank: 3, team: 'The Funk Soul Brothers', owner: 'Alex', record: '10-4-0', pf: 1939.79, result: '3rd Place' },
+            { rank: 4, team: 'The OG JG', owner: 'Jason', record: '8-6-0', pf: 1843.09, result: 'Semis' },
+            { rank: 5, team: "Keep On Keepin' Keepers", owner: 'Tom', record: '8-6-0', pf: 1684.50, result: 'Quarters' },
+            { rank: 6, team: 'Persona non grata', owner: 'KP', record: '7-7-0', pf: 1724.63, result: 'Quarters' },
+            { rank: 7, team: "Josh's Chubb", owner: 'Josh', record: '6-8-0', pf: 1531.43, result: 'Missed Playoffs' },
+            { rank: 8, team: 'Autodraft', owner: 'Jon', record: '6-8-0', pf: 1513.19, result: 'Missed Playoffs' },
+            { rank: 9, team: 'TopicalNFLStory+Pun', owner: 'Aguirre', record: '5-9-0', pf: 1660.19, result: 'Missed Playoffs' },
+            { rank: 10, team: 'The Slim Reapers', owner: 'Seigle', record: '5-9-0', pf: 1575.90, result: 'Missed Playoffs' },
+            { rank: 11, team: 'D+ Draft (Poor Preparation)', owner: 'Seth', record: '4-10-0', pf: 1511.60, result: 'Last Place' },
+            { rank: 12, team: 'Can You Digg It?', owner: 'Joe D', record: '3-11-0', pf: 1698.30, result: 'Schedule Victim' },
+        ];
+
+        const weeklyHighs = [
+            { week: 1, owner: 'Jon', score: 155.95 },
+            { week: 2, owner: 'Babo', score: 171.37 },
+            { week: 3, owner: 'Babo', score: 155.75 },
+            { week: 4, owner: 'Babo', score: 173.17 },
+            { week: 5, owner: 'Babo', score: 177.29 },
+            { week: 6, owner: 'Aguirre', score: 140.93 },
+            { week: 7, owner: 'Alex', score: 188.63 },
+            { week: 8, owner: 'Aguirre', score: 187.80 },
+            { week: 9, owner: 'KP', score: 155.91 },
+            { week: 10, owner: 'Alex', score: 166.43 },
+            { week: 11, owner: 'Babo', score: 164.31 },
+            { week: 12, owner: 'Alex', score: 163.32 },
+            { week: 13, owner: 'Babo', score: 167.81 },
+            { week: 14, owner: 'Jason', score: 182.34 },
+        ];
+
+        const baboPool = [
+            { rank: 1, owner: 'Babo', qb: 'Dak Prescott', rb: 'CMC', wr: 'Puka Nacua', total: 224.88 },
+            { rank: 2, owner: 'Jon', qb: 'Baker Mayfield', rb: 'Derrick Henry', wr: 'Amon-Ra St. Brown', total: 215.31 },
+            { rank: 3, owner: 'Joe D', qb: 'Joe Burrow', rb: 'Chase Brown', wr: 'Trey McBride', total: 201.49 },
+            { rank: 4, owner: 'Gottlieb', qb: 'Brock Purdy', rb: 'Omarion Hampton', wr: 'Tee Higgins', total: 182.44 },
+            { rank: 5, owner: 'Haskell', qb: 'Drake Maye', rb: 'Javonte Williams', wr: 'George Kittle', total: 169.38 },
+            { rank: 6, owner: 'Goodies', qb: 'Josh Allen', rb: "De'Von Achane", wr: 'JSN', total: 157.33 },
+            { rank: 7, owner: 'Seka', qb: 'Jalen Hurts', rb: 'TreVeyon Henderson', wr: 'Jauan Jennings', total: 153.91 },
+            { rank: 8, owner: 'KP', qb: 'Matthew Stafford', rb: 'Josh Jacobs', wr: 'CeeDee Lamb', total: 144.01 },
+            { rank: 9, owner: 'ZM', qb: 'Jacoby Brissett', rb: 'Jonathan Taylor', wr: 'AJ Brown', total: 141.81 },
+            { rank: 10, owner: 'Aguirre', qb: 'Lamar Jackson', rb: 'James Cook', wr: 'Jameson Williams', total: 131.73 },
+            { rank: 11, owner: 'Silby', qb: 'Bo Nix', rb: 'Jahmyr Gibbs', wr: 'Rashee Rice', total: 126.28 },
+            { rank: 12, owner: 'Seigle', qb: 'Patrick Mahomes', rb: 'Saquon Barkley', wr: 'Justin Jefferson', total: 81.13 },
+        ];
+
+        const payouts = [
+            { category: 'Champion', recipient: 'Babo', amount: 1490 },
+            { category: 'Runner-Up', recipient: 'ZM', amount: 700 },
+            { category: '3rd Place', recipient: 'Alex', amount: 250 },
+            { category: 'Weekly High (6x)', recipient: 'Babo', amount: 270 },
+            { category: 'Weekly High (3x)', recipient: 'Alex', amount: 135 },
+            { category: 'Weekly High (2x)', recipient: 'Aguirre', amount: 90 },
+            { category: 'Weekly High (1x)', recipient: 'Jon', amount: 45 },
+            { category: 'Weekly High (1x)', recipient: 'KP', amount: 45 },
+            { category: 'Weekly High (1x)', recipient: 'Jason', amount: 45 },
+            { category: 'Babo Pool', recipient: 'Babo', amount: 50 },
+        ];
+
+        // Helper functions
+        function getTierColor(tier) {
+            const colors = {
+                'GOAT': 'from-yellow-400 to-amber-600',
+                'ELITE': 'from-purple-500 to-indigo-600',
+                'BUFFALO BILLS': 'from-red-500 to-rose-600',
+                'ONE-TIMER': 'from-gray-400 to-slate-500',
+                'STILL SEARCHING': 'from-orange-400 to-amber-500',
+                'RINGLESS': 'from-gray-600 to-gray-700'
+            };
+            return colors[tier] || 'from-gray-400 to-slate-500';
+        }
+
+        function getResultColor(result) {
+            const colors = {
+                'CHAMPION': 'text-yellow-400',
+                'Runner-Up': 'text-gray-300',
+                '3rd Place': 'text-amber-600',
+                'Schedule Victim': 'text-red-400',
+                'Last Place': 'text-red-600'
+            };
+            return colors[result] || 'text-gray-400';
+        }
+
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Records switching
+        function showRecords(category) {
+            document.querySelectorAll('.record-btn').forEach(el => el.classList.remove('active'));
+            event.target.classList.add('active');
+            renderRecords(category);
+        }
+
+        // Render functions
+        function renderChampions() {
+            const container = document.getElementById('champions-list');
+            container.innerHTML = champions.map(c => `
+                <div class="relative overflow-hidden rounded-lg border ${c.year === 2025 ? 'border-yellow-500 bg-gradient-to-r from-yellow-900/40 to-amber-900/40' : 'border-gray-700 bg-gray-800/50'} p-4 transition-all hover:border-yellow-600/50">
+                    <div class="flex items-center gap-4">
+                        <div class="text-2xl font-black ${c.year === 2025 ? 'text-yellow-400' : 'text-gray-500'}">${c.year}</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">🏆</span>
+                                <span class="font-bold text-lg text-white">${c.champion}</span>
+                                ${c.note ? `<span class="text-xs bg-yellow-600/30 text-yellow-400 px-2 py-0.5 rounded">${c.note}</span>` : ''}
+                            </div>
+                            <div class="text-sm text-gray-400">defeated <span class="text-gray-300">${c.runnerUp}</span></div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-black text-yellow-500">${c.championTitles}</div>
+                            <div class="text-xs text-gray-500 uppercase">Title${c.championTitles > 1 ? 's' : ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDynasty() {
+            const container = document.getElementById('dynasty-list');
+            container.innerHTML = dynastyRankings.map((d, i) => `
+                <div class="relative overflow-hidden rounded-xl border border-gray-700 bg-gray-800/50 p-5 ${i === 0 ? 'ring-2 ring-yellow-500 shadow-lg shadow-yellow-500/20' : ''}">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-full bg-gradient-to-br ${getTierColor(d.tier)} flex items-center justify-center text-xl font-black text-white shadow-lg">
+                            ${d.titles > 0 ? d.titles : '-'}
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="text-xl font-black text-white">${d.name}</span>
+                                <span class="text-xs font-bold px-2 py-1 rounded bg-gradient-to-r ${getTierColor(d.tier)} text-white">${d.tier}</span>
+                            </div>
+                            ${d.titles > 0 ? `<div class="text-sm text-gray-400">Championships: <span class="text-yellow-500 font-bold">${d.years}</span></div>` : '<div class="text-sm text-gray-500">No championships yet</div>'}
+                            ${d.highlight ? `<div class="text-xs text-amber-400 mt-1">${d.highlight}</div>` : ''}
+                        </div>
+                        <div class="text-right">
+                            ${d.titles > 0 ? `<div class="flex items-center gap-1 justify-end">${'🏆'.repeat(Math.min(d.titles, 5))}</div>` : ''}
+                            <div class="text-xs text-gray-500 mt-1">${d.runnerUps > 0 ? `${d.runnerUps} runner-up${d.runnerUps > 1 ? 's' : ''}` : ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRecords(category) {
+            const container = document.getElementById('records-content');
+            const data = records[category];
+            
+            let html = `
+                <div class="bg-green-900/20 rounded-xl border border-green-700 p-6">
+                    <h3 class="text-xl font-bold text-green-400 mb-4 flex items-center gap-2"><span>📈</span> MOST</h3>
+                    <div class="space-y-4">
+                        ${data.most.map(r => `
+                            <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                                <div class="text-xs text-gray-500 uppercase mb-1">${r.record}</div>
+                                <div class="font-bold text-white text-sm">${r.holder}</div>
+                                ${r.context ? `<div class="text-xs text-gray-400">${r.context}</div>` : ''}
+                                <div class="text-lg font-black text-green-400 mt-1">${r.points}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="bg-red-900/20 rounded-xl border border-red-700 p-6">
+                    <h3 class="text-xl font-bold text-red-400 mb-4 flex items-center gap-2"><span>📉</span> LEAST</h3>
+                    <div class="space-y-4">
+                        ${data.least.length > 0 ? data.least.map(r => `
+                            <div class="bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+                                <div class="text-xs text-gray-500 uppercase mb-1">${r.record}</div>
+                                <div class="font-bold text-white text-sm">${r.holder}</div>
+                                ${r.context ? `<div class="text-xs text-gray-400">${r.context}</div>` : ''}
+                                <div class="text-lg font-black text-red-400 mt-1">${r.points}</div>
+                            </div>
+                        `).join('') : '<div class="text-gray-500 text-center py-8">No "least" records for this category</div>'}
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function renderStandings() {
+            const container = document.getElementById('standings-table');
+            container.innerHTML = standings.map(t => `
+                <tr class="border-b border-gray-800">
+                    <td class="py-2 pr-4 font-bold text-gray-500">${t.rank}</td>
+                    <td class="py-2 pr-4 font-medium">${t.team}</td>
+                    <td class="py-2 pr-4 text-gray-400">${t.owner}</td>
+                    <td class="py-2 pr-4 font-mono">${t.record}</td>
+                    <td class="py-2 pr-4 font-mono text-gray-300">${t.pf.toFixed(2)}</td>
+                    <td class="py-2 font-bold ${getResultColor(t.result)}">${t.result}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderWeeklyHighs() {
+            const container = document.getElementById('weekly-highs');
+            container.innerHTML = weeklyHighs.map(w => `
+                <div class="bg-gray-900/50 rounded-lg p-3 text-center border border-gray-700">
+                    <div class="text-xs text-gray-500">Week ${w.week}</div>
+                    <div class="font-bold text-sm text-white truncate">${w.owner}</div>
+                    <div class="text-xs text-yellow-500">${w.score}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderBaboPool() {
+            const container = document.getElementById('babo-pool-table');
+            container.innerHTML = baboPool.map((p, i) => `
+                <tr class="border-b border-gray-800 ${i === 0 ? 'bg-yellow-900/20' : ''}">
+                    <td class="py-2 pr-4 font-bold text-gray-500">${p.rank}</td>
+                    <td class="py-2 pr-4 font-medium ${i === 0 ? 'text-yellow-400' : ''}">${p.owner}</td>
+                    <td class="py-2 pr-4 text-gray-300">${p.qb}</td>
+                    <td class="py-2 pr-4 text-gray-300">${p.rb}</td>
+                    <td class="py-2 pr-4 text-gray-300">${p.wr}</td>
+                    <td class="py-2 font-bold ${i === 0 ? 'text-yellow-400' : 'text-gray-300'}">${p.total}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderPayouts() {
+            const container = document.getElementById('payouts-grid');
+            container.innerHTML = payouts.map(p => `
+                <div class="flex justify-between items-center bg-gray-900/50 rounded-lg p-3">
+                    <div>
+                        <div class="text-sm text-gray-400">${p.category}</div>
+                        <div class="font-bold text-white">${p.recipient}</div>
+                    </div>
+                    <div class="text-xl font-black text-green-400">$${p.amount}</div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderChampions();
+            renderDynasty();
+            renderRecords('teamPoints');
+            renderStandings();
+            renderWeeklyHighs();
+            renderBaboPool();
+            renderPayouts();
+        });
+    </script>
+</body>
+</html>
