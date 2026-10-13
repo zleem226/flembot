@@ -1,0 +1,573 @@
+<style>
+#dash-root .fb { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); }
+.fb-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; line-height: 1.15; }
+.fb-take { margin: var(--cds-gap-sm) 0 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); max-width: 62rem; line-height: 1.5; min-height: 1.5em; }
+.fb .fb-take b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.fb-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10.5rem), 1fr)); gap: var(--cds-gap-md); }
+.fb-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; position: relative; container-type: inline-size; }
+.fb-kpi .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb-kpi .num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.15; margin: var(--cds-gap-xs) 0; min-height: 1.15em; }
+.fb-kpi .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); min-height: 1.3em; }
+.fb-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.fb-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.fb-note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); line-height: 1.45; }
+.fb-sec { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); text-transform: uppercase; letter-spacing: .06em; margin: var(--cds-gap-sm) 0 calc(-1 * var(--cds-gap-sm)); }
+.fb-box { min-height: 12rem; }
+.fb-box.short { min-height: 6rem; }
+.fb-msg { display: none; align-items: center; justify-content: center; gap: var(--cds-gap-xs); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: inherit; }
+.fb-msg::before { content: ''; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+.fb-box.is-wait > * { display: none; }
+.fb-box.is-fail > :not(.fb-msg) { display: none; }
+.fb-box.is-fail > .fb-msg { display: flex; }
+.fb-scroll { overflow-x: auto; }
+table.fb-t { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+.fb-t th { text-align: left; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); border-bottom: 1px solid var(--color-border-line); padding: var(--cds-pad-xs) var(--cds-pad-sm); background: var(--color-panel); white-space: nowrap; }
+.fb-t td { padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.fb-t tr:last-child td { border-bottom: 0; }
+.fb-t .r { text-align: right; }
+.fb-t .mut { color: var(--color-fg-muted); }
+.fb-t .em { font-weight: var(--cds-font-weight-medium); }
+.fb-t .wrap { min-width: 12rem; }
+.fb-t .good { color: var(--color-ok); }
+.fb-t .bad { color: var(--color-bad); }
+.fb-t .me td { background: color-mix(in srgb, var(--color-fg) 5%, transparent); }
+.fb-pill { display: inline-block; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 0 var(--cds-pad-sm); white-space: nowrap; }
+@container (max-width: 36rem) { .fb-t .opt { display: none; } }
+.fb-svg text { font-family: var(--font-anthropic-sans); }
+.fb-svg .lbl { fill: var(--color-fg); font-size: var(--cds-font-size-caption); }
+.fb-svg .val { fill: var(--color-fg-muted); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.fb-svg .fb-ax text { fill: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.fb-svg .grid line { stroke: var(--cds-chart-grid); }
+.fb-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: calc(-1 * var(--cds-gap-xs)) 0 var(--cds-gap-sm); }
+.fb-legend span { display: inline-flex; align-items: center; gap: var(--cds-gap-xs); }
+.fb-legend i { width: .6rem; height: .6rem; border-radius: 3px; display: inline-block; }
+.fb-heat { display: grid; gap: 3px; font-variant-numeric: tabular-nums; min-width: max(100%, max-content); }
+.fb-heat .h { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 0 var(--cds-pad-sm) var(--cds-pad-xs); text-align: right; }
+.fb-heat .h.l { text-align: left; }
+.fb-heat .who { padding: var(--cds-pad-xs) var(--cds-pad-sm); min-width: 0; }
+.fb-heat .who .m { font-weight: var(--cds-font-weight-medium); }
+.fb-heat .who .t { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fb-heat .c { white-space: nowrap; border-radius: 6px; padding: var(--cds-pad-xs) var(--cds-pad-sm); display: flex; align-items: center; justify-content: flex-end; gap: var(--cds-gap-xs); cursor: default; }
+.fb-heat .c .wl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.fb-heat .c .wl.w { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.fb-heat .c .star { font-size: var(--cds-font-size-caption); }
+.fb-heat .tot { padding: var(--cds-pad-xs) var(--cds-pad-sm); text-align: right; font-weight: var(--cds-font-weight-medium); display: flex; align-items: center; justify-content: flex-end; }
+.fb-heat .c:hover { outline: 1px solid var(--color-fg-muted); }
+.fb-tip { position: absolute; display: none; z-index: 5; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; max-width: 16rem; line-height: 1.45; }
+.fb-tip .th { color: var(--cds-text-secondary); }
+.fb-tl td.d { white-space: nowrap; color: var(--color-fg-muted); }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+[data-dash-source-state=empty] { color: transparent; }
+</style>
+
+<div class="fb">
+  <header class="fb-head" id="top">
+    <h1>Friends O' Flembot · Season 21 so far</h1>
+    <p class="fb-take dash-skeleton" id="takeaway"></p>
+  </header>
+
+  <section class="fb-kpis" id="kpis" aria-label="Season totals">
+    <div class="fb-card fb-kpi"><div class="lbl">Top weekly score</div><div class="num dash-skeleton" data-source="season" data-field="top_score" data-row="0">—</div><div class="sub"><span data-source="season" data-field="top_manager" data-row="0">—</span> · Week <span data-source="season" data-field="top_week" data-row="0">—</span></div></div>
+    <div class="fb-card fb-kpi"><div class="lbl">League average</div><div class="num dash-skeleton" data-source="season" data-field="average" data-row="0">—</div><div class="sub">Points per team per week</div></div>
+    <div class="fb-card fb-kpi"><div class="lbl">Closest game</div><div class="num dash-skeleton" data-source="season" data-field="closest_margin" data-row="0">—</div><div class="sub"><span data-source="season" data-field="closest_game" data-row="0">—</span> · Week <span data-source="season" data-field="closest_week" data-row="0">—</span></div></div>
+    <div class="fb-card fb-kpi"><div class="lbl">High-score money paid</div><div class="num dash-skeleton" data-source="season" data-field="prize_paid" data-row="0">—</div><div class="sub">$45 a week to the top scorer</div></div>
+    <div class="fb-card fb-kpi"><div class="lbl">Goose eggs</div><div class="num dash-skeleton" data-source="season" data-field="goose_eggs" data-row="0">—</div><div class="sub">Starters who played and scored 0.00</div></div>
+    <div class="fb-card fb-kpi"><div class="lbl">Weeks played</div><div class="num dash-skeleton" data-source="season" data-field="weeks" data-row="0">—</div><div class="sub">2026 regular season so far</div></div>
+  </section>
+
+  <div class="fb-sec">The race</div>
+  <section class="fb-card" id="standings">
+    <h2>Standings</h2>
+    <p class="fb-note">Sorted by record, then points for. All-play is each manager's score against all 11 other teams every week.</p>
+    <div class="fb-box fb-scroll" id="standings-box">
+      <table class="fb-t" data-source="standings" data-row-key="manager">
+        <thead><tr>
+          <th data-field="rank" class="r">#</th>
+          <th data-field="manager">Manager</th>
+          <th data-field="team" class="opt">Team</th>
+          <th data-field="record" class="r">Record</th>
+          <th data-field="points_for" class="r">Points for</th>
+          <th data-field="points_against" class="r opt">Points against</th>
+          <th data-field="all_play" class="r opt">All-play</th>
+          <th data-field="luck" class="r">Luck</th>
+          <th data-field="prize" class="r opt">$ won</th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="fb-msg">Failed to load</div>
+    </div>
+  </section>
+
+  <section class="fb-grid">
+    <div class="fb-card" id="luck">
+      <h2>Schedule luck</h2>
+      <p class="fb-note">Actual wins minus the wins each manager's all-play rate predicts. Right of zero means the schedule helped.</p>
+      <div class="fb-box" id="luck-box"><div class="fb-chart" data-source="standings"></div><div class="fb-msg">Failed to load</div></div>
+    </div>
+    <div class="fb-card" id="weekly">
+      <h2>Scoring by week</h2>
+      <p class="fb-note">Each week's high and low team score, with the league average marked.</p>
+      <div class="fb-legend"><span><i id="lg-hi"></i>High</span><span><i id="lg-avg"></i>Average</span><span><i style="background: var(--cds-chart-muted)"></i>Low</span></div>
+      <div class="fb-box" id="weekly-box"><div class="fb-chart" data-source="weekly"></div><div class="fb-msg">Failed to load</div></div>
+    </div>
+  </section>
+
+  <section class="fb-card" id="grid">
+    <h2>Week by week</h2>
+    <p class="fb-note">Every team's score each week; darker means higher. ★ marks the week's $45 high score.</p>
+    <div class="fb-box fb-scroll" id="heat-box"><div class="fb-heat"></div><div class="fb-msg">Failed to load</div></div>
+  </section>
+
+  <div class="fb-sec">The moments</div>
+  <section class="fb-grid">
+    <div class="fb-card" id="top-starters">
+      <h2>Best individual games</h2>
+      <p class="fb-note">Top starter scores so far, taken from the weekly recaps. Bench scores don't count.</p>
+      <div class="fb-box fb-scroll" id="top-box">
+        <table class="fb-t" data-source="top_starters" data-row-key="player,week">
+          <thead><tr>
+            <th data-field="player">Player</th>
+            <th data-field="pos" class="opt">Pos</th>
+            <th data-field="week">Week</th>
+            <th data-field="manager">Manager</th>
+            <th data-field="points" class="r">Points</th>
+            <th data-field="line" class="opt">The line</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="fb-msg">Failed to load</div>
+      </div>
+    </div>
+    <div class="fb-card" id="goose">
+      <h2>Goose egg watch</h2>
+      <p class="fb-note">Starters who played and scored exactly zero.</p>
+      <div class="fb-box fb-scroll" id="goose-box">
+        <table class="fb-t" data-source="goose_eggs" data-row-key="week,player">
+          <thead><tr>
+            <th data-field="week">Week</th>
+            <th data-field="player">Player</th>
+            <th data-field="pos" class="opt">Pos</th>
+            <th data-field="manager">Manager</th>
+            <th data-field="note" class="opt">What happened</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="fb-msg">Failed to load</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fb-grid">
+    <div class="fb-card" id="timeline">
+      <h2>The year so far</h2>
+      <p class="fb-note">From Babo's 2025 title to the latest weekly recap.</p>
+      <div class="fb-box fb-scroll" id="tl-box">
+        <table class="fb-t fb-tl" data-source="timeline" data-row-key="date">
+          <thead><tr>
+            <th data-field="date">Date</th>
+            <th data-field="phase" class="opt">Phase</th>
+            <th data-field="event">What happened</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="fb-msg">Failed to load</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+dash.calc('standings', {
+  title: 'Standings and schedule luck',
+  description: 'Record, points, all-play record and luck (actual wins minus all-play expected wins) per manager.',
+  inputs: ['matchups'],
+  fn: (matchups) => {
+    const round2 = (x) => Math.round(x * 100) / 100;
+    const rows = matchups.map(r => ({ ...r, week: Number(r.week), pf: Number(r.points_for), pa: Number(r.points_against) }));
+    const last = Math.max(...rows.map(r => r.week));
+    const out = [...new Set(rows.map(r => r.manager))].map(m => {
+      const mine = rows.filter(r => r.manager === m);
+      const wins = mine.filter(r => r.result === 'W').length;
+      let apW = 0, apL = 0, highs = 0;
+      mine.forEach(r => {
+        const others = rows.filter(o => o.week === r.week && o.manager !== m);
+        apW += others.filter(o => o.pf < r.pf).length;
+        apL += others.filter(o => o.pf > r.pf).length;
+        if (others.every(o => o.pf < r.pf)) highs += 1;
+      });
+      const expected = apW / (apW + apL) * mine.length;
+      return {
+        manager: m, team: mine.find(r => r.week === last).team,
+        record: `${wins}-${mine.length - wins}`, wins,
+        points_for: round2(mine.reduce((s, r) => s + r.pf, 0)),
+        points_against: round2(mine.reduce((s, r) => s + r.pa, 0)),
+        all_play: `${apW}-${apL}`, expected_wins: round2(expected), luck: round2(wins - expected),
+        high_scores: highs, prize: highs * 45
+      };
+    });
+    out.sort((a, b) => b.wins - a.wins || b.points_for - a.points_for);
+    return out.map((r, i) => ({ rank: i + 1, ...r }));
+  }
+});
+
+dash.calc('weekly', {
+  title: 'Weekly high, low and average',
+  description: 'Per week: average team score, the high and low scorers, and the closest game.',
+  inputs: ['matchups'],
+  fn: (matchups) => {
+    const round2 = (x) => Math.round(x * 100) / 100;
+    const rows = matchups.map(r => ({ ...r, week: Number(r.week), pf: Number(r.points_for), pa: Number(r.points_against) }));
+    return [...new Set(rows.map(r => r.week))].sort((a, b) => a - b).map(w => {
+      const wk = rows.filter(r => r.week === w);
+      const hi = wk.reduce((a, b) => (b.pf > a.pf ? b : a));
+      const lo = wk.reduce((a, b) => (b.pf < a.pf ? b : a));
+      const close = wk.filter(r => r.result === 'W').reduce((a, b) => (b.pf - b.pa < a.pf - a.pa ? b : a));
+      const total = wk.reduce((s, r) => s + r.pf, 0);
+      return {
+        week: w, teams: wk.length, total: round2(total), average: round2(total / wk.length),
+        high: hi.pf, high_manager: hi.manager, low: lo.pf, low_manager: lo.manager,
+        closest_margin: round2(close.pf - close.pa), closest_game: `${close.manager} over ${close.opponent}`
+      };
+    });
+  }
+});
+
+dash.calc('season', {
+  title: 'Season-to-date totals',
+  description: 'Weeks played, top weekly score, league average, closest game, $45 prizes paid and goose eggs.',
+  inputs: ['weekly', 'goose_eggs'],
+  fn: (weekly, goose_eggs) => {
+    const top = weekly.reduce((a, b) => (b.high > a.high ? b : a));
+    const close = weekly.reduce((a, b) => (b.closest_margin < a.closest_margin ? b : a));
+    const total = weekly.reduce((s, w) => s + w.total, 0);
+    const teams = weekly.reduce((s, w) => s + w.teams, 0);
+    return [{
+      weeks: weekly.length, top_score: top.high, top_manager: top.high_manager, top_week: top.week,
+      average: Math.round(total / teams * 100) / 100,
+      closest_margin: close.closest_margin, closest_game: close.closest_game, closest_week: close.week,
+      prize_paid: weekly.length * 45, goose_eggs: goose_eggs.length
+    }];
+  }
+});
+
+(() => {
+  const f2 = d3.format('.2f');
+  const fSigned = d3.format('+.2f');
+  const fMoney = d3.format('$,');
+  const enc = encodeURIComponent;
+  const ME = 'Zach';
+  const col = (i) => dash.colors[i];
+
+  function gate(box, ids) {
+    const st = ids.map(id => dash.data(id));
+    if (st.every(s => s.status === 'ok')) {
+      box.classList.remove('dash-skeleton', 'is-wait', 'is-fail');
+      return st.map(s => s.data);
+    }
+    const bad = st.some(s => s.status !== 'ok' && s.status !== 'loading');
+    box.classList.toggle('is-fail', bad);
+    box.classList.toggle('is-wait', !bad);
+    box.classList.toggle('dash-skeleton', !bad);
+    return null;
+  }
+
+  function tipFor(card) {
+    let tip = card.querySelector(':scope > .fb-tip');
+    if (!tip) { tip = document.createElement('div'); tip.className = 'fb-tip'; card.appendChild(tip); }
+    return {
+      show(ev, head, lines) {
+        tip.replaceChildren();
+        const h = document.createElement('div'); h.className = 'th'; h.textContent = head; tip.appendChild(h);
+        lines.forEach(l => { const d = document.createElement('div'); d.textContent = l; tip.appendChild(d); });
+        tip.style.display = 'block';
+        const r = card.getBoundingClientRect();
+        let x = ev.clientX - r.left + 14, y = ev.clientY - r.top + 14;
+        if (x + tip.offsetWidth > card.clientWidth) x = ev.clientX - r.left - tip.offsetWidth - 14;
+        if (y + tip.offsetHeight > card.clientHeight) y = ev.clientY - r.top - tip.offsetHeight - 14;
+        tip.style.left = Math.max(0, x) + 'px'; tip.style.top = Math.max(0, y) + 'px';
+      },
+      hide() { tip.style.display = 'none'; }
+    };
+  }
+
+  function textW(svg, str, cls) {
+    const t = svg.append('text').attr('class', cls).text(str);
+    const w = t.node().getComputedTextLength();
+    t.remove();
+    return w;
+  }
+
+  function mark(tag, src, field, where, text) {
+    const el = document.createElement(tag);
+    el.dataset.source = src; el.dataset.field = field;
+    if (where) el.dataset.where = where;
+    el.textContent = text;
+    return el;
+  }
+
+  const ordinal = (n) => { const s = ['th', 'st', 'nd', 'rd'], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); };
+  const joinNames = (a) => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + (a.length > 2 ? ',' : '') + ' and ' + a[a.length - 1];
+
+  function drawTake(el, st, season) {
+    el.replaceChildren();
+    const add = (x) => el.append(x);
+    const bold = (x) => { const b = document.createElement('b'); b.append(x); return b; };
+    const rec = (d) => mark('span', 'standings', 'record', `manager=${enc(d.manager)}`, d.record);
+    const maxW = d3.max(st, d => d.wins);
+    const leaders = st.filter(d => d.wins === maxW).map(d => d.manager);
+    const byPF = st.slice().sort((a, b) => b.points_for - a.points_for).map(d => d.manager);
+    const lucky = st.reduce((a, b) => (b.luck > a.luck ? b : a));
+    const minL = d3.min(st, d => d.luck);
+    const unlucky = st.filter(d => d.luck === minL);
+    add(bold(joinNames(leaders)));
+    add(leaders.length > 1 ? ' share the lead at ' : ' leads at ');
+    add(bold(rec(st[0])));
+    add(' through Week ');
+    add(mark('span', 'season', 'weeks', null, String(season.weeks)));
+    add('. ');
+    add(bold(lucky.manager));
+    add(' has had the kindest schedule: ');
+    add(bold(rec(lucky)));
+    add(` with the ${ordinal(byPF.indexOf(lucky.manager) + 1)}-most points. `);
+    add(bold(joinNames(unlucky.map(d => d.manager))));
+    add(unlucky.length > 1 ? ' have had the cruelest: each is ' : ' has had the cruelest: ');
+    add(bold(rec(unlucky[0])));
+    add(' despite an all-play record of ');
+    add(bold(mark('span', 'standings', 'all_play', `manager=${enc(unlucky[0].manager)}`, unlucky[0].all_play)));
+    add('.');
+  }
+
+  function drawKpis(season) {
+    document.querySelectorAll('#kpis [data-source="season"]').forEach(el => {
+      el.classList.remove('dash-skeleton');
+      const f = el.dataset.field;
+      if (!season) { el.textContent = '—'; return; }
+      const v = season[f];
+      el.textContent = f === 'prize_paid' ? fMoney(v)
+        : ['top_score', 'average', 'closest_margin'].includes(f) ? f2(v)
+        : String(v);
+    });
+  }
+
+  function drawStandings(rows) {
+    const tb = document.querySelector('#standings tbody');
+    tb.replaceChildren();
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      if (r.manager === ME) tr.className = 'me';
+      const cells = [
+        [String(r.rank), 'r mut'], [r.manager, 'em'], [r.team, 'opt mut'], [r.record, 'r em'],
+        [f2(r.points_for), 'r'], [f2(r.points_against), 'r opt'], [r.all_play, 'r opt'],
+        [fSigned(r.luck), 'r ' + (r.luck > 0.25 ? 'good' : r.luck < -0.25 ? 'bad' : 'mut')],
+        [fMoney(r.prize), 'r opt' + (r.prize ? '' : ' mut')]
+      ];
+      cells.forEach(([t, c]) => { const td = document.createElement('td'); td.className = c; td.textContent = t; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+  }
+
+  function drawLuck(el, rows) {
+    el.replaceChildren();
+    const card = document.getElementById('luck');
+    const tip = tipFor(card);
+    const data = rows.slice().sort((a, b) => b.luck - a.luck);
+    const W = Math.max(280, el.clientWidth || 360);
+    const rowH = 26, top = 4, bottom = 26;
+    const H = top + bottom + rowH * data.length;
+    const svg = d3.select(el).append('svg').attr('class', 'fb-svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Schedule luck by manager');
+    const labW = d3.max(data, d => textW(svg, d.manager, 'lbl')) + 12;
+    const valW = d3.max(data, d => textW(svg, fSigned(d.luck), 'val')) + 8;
+    const m = Math.max(0.5, d3.max(data, d => Math.abs(d.luck)));
+    const x = d3.scaleLinear([-m, m], [labW + valW, W - valW]);
+    const y = d3.scaleBand(data.map(d => d.manager), [top, H - bottom]).padding(0.3);
+    const ticks = x.ticks(4);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(ticks).join('line')
+      .attr('x1', d => x(d)).attr('x2', d => x(d)).attr('y1', top).attr('y2', H - bottom);
+    svg.append('g').attr('class', 'fb-ax').attr('transform', `translate(0,${H - bottom})`)
+      .call(d3.axisBottom(x).tickValues(ticks).tickFormat(d3.format('+.1f')).tickSize(0).tickPadding(8))
+      .attr('font-size', null).attr('font-family', null)
+      .call(g => g.select('.domain').remove());
+    svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', top).attr('y2', H - bottom)
+      .attr('stroke', 'var(--cds-chart-reference)').attr('stroke-width', 1);
+    const g = svg.append('g').selectAll('g').data(data).join('g');
+    g.append('text').attr('class', 'lbl').attr('x', 0).attr('y', d => y(d.manager) + y.bandwidth() / 2).attr('dy', '0.35em')
+      .style('font-weight', d => d.manager === ME ? 600 : null).text(d => d.manager);
+    g.append('rect')
+      .attr('x', d => Math.min(x(0), x(d.luck))).attr('width', d => Math.max(2, Math.abs(x(d.luck) - x(0))))
+      .attr('y', d => y(d.manager)).attr('height', y.bandwidth()).attr('rx', 4)
+      .attr('fill', d => d.luck >= 0 ? col(0) : col(1));
+    g.append('text').attr('class', 'val')
+      .attr('x', d => d.luck >= 0 ? x(d.luck) + 5 : x(d.luck) - 5)
+      .attr('text-anchor', d => d.luck >= 0 ? 'start' : 'end')
+      .attr('y', d => y(d.manager) + y.bandwidth() / 2).attr('dy', '0.35em').text(d => fSigned(d.luck));
+    g.append('rect').attr('x', 0).attr('width', W).attr('y', d => y(d.manager) - 2).attr('height', y.bandwidth() + 4).attr('fill', 'transparent')
+      .on('mousemove', (ev, d) => tip.show(ev, `${d.manager} · ${d.team}`, [
+        `Record ${d.record}`, `All-play ${d.all_play}`, `Expected wins ${f2(d.expected_wins)}`, `Luck ${fSigned(d.luck)}`]))
+      .on('mouseleave', () => tip.hide());
+  }
+
+  function drawWeekly(el, rows) {
+    el.replaceChildren();
+    const card = document.getElementById('weekly');
+    const tip = tipFor(card);
+    const W = Math.max(280, el.clientWidth || 360), H = 280;
+    const svg = d3.select(el).append('svg').attr('class', 'fb-svg').attr('width', '100%').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'High, average and low score by week');
+    const lo = d3.min(rows, d => d.low), hi = d3.max(rows, d => d.high);
+    const y0 = d3.scaleLinear([lo - 20, hi + 20], [H - 28, 10]).nice();
+    const ticks = y0.ticks(5);
+    const left = d3.max(ticks, t => textW(svg, d3.format(',')(t), 'val')) + 10;
+    const y = y0;
+    const x = d3.scaleBand(rows.map(d => d.week), [left, W - 4]).padding(0.25);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(ticks).join('line')
+      .attr('x1', left).attr('x2', W - 4).attr('y1', d => y(d)).attr('y2', d => y(d));
+    svg.append('g').attr('class', 'fb-ax').attr('transform', `translate(${left},0)`)
+      .call(d3.axisLeft(y).tickValues(ticks).tickFormat(d3.format(',')).tickSize(0).tickPadding(8))
+      .attr('font-size', null).attr('font-family', null).call(g => g.select('.domain').remove());
+    svg.append('g').attr('class', 'fb-ax').attr('transform', `translate(0,${H - 28})`)
+      .call(d3.axisBottom(x).tickFormat(w => `Week ${w}`).tickSize(0).tickPadding(10))
+      .attr('font-size', null).attr('font-family', null).call(g => g.select('.domain').remove());
+    const g = svg.append('g').selectAll('g').data(rows).join('g');
+    const cx = (d) => x(d.week) + x.bandwidth() / 2;
+    g.append('line').attr('x1', cx).attr('x2', cx).attr('y1', d => y(d.low)).attr('y2', d => y(d.high))
+      .attr('stroke', col(0)).attr('stroke-opacity', 0.28).attr('stroke-width', 10).attr('stroke-linecap', 'round');
+    g.append('line').attr('x1', d => cx(d) - 14).attr('x2', d => cx(d) + 14).attr('y1', d => y(d.average)).attr('y2', d => y(d.average))
+      .attr('stroke', col(2)).attr('stroke-width', 2).attr('stroke-linecap', 'round');
+    g.append('circle').attr('cx', cx).attr('cy', d => y(d.high)).attr('r', 5).attr('fill', col(0));
+    g.append('circle').attr('cx', cx).attr('cy', d => y(d.low)).attr('r', 5).attr('fill', 'var(--cds-chart-muted)');
+    const roomy = x.bandwidth() >= d3.max(rows, d => textW(svg, `${d.high_manager} ${f2(d.high)}`, 'val')) + 4;
+    g.append('text').attr('class', 'val').attr('text-anchor', 'middle').attr('x', cx).attr('y', d => y(d.high) - 10)
+      .text(d => roomy ? `${d.high_manager} ${f2(d.high)}` : f2(d.high));
+    g.append('text').attr('class', 'val').attr('text-anchor', 'middle').attr('x', cx).attr('y', d => y(d.low) + 18)
+      .text(d => roomy ? `${d.low_manager} ${f2(d.low)}` : f2(d.low));
+    g.append('rect').attr('x', d => x(d.week)).attr('width', x.bandwidth()).attr('y', 0).attr('height', H - 28).attr('fill', 'transparent')
+      .on('mousemove', (ev, d) => tip.show(ev, `Week ${d.week}`, [
+        `High ${f2(d.high)} (${d.high_manager})`, `Average ${f2(d.average)}`, `Low ${f2(d.low)} (${d.low_manager})`,
+        `Closest ${f2(d.closest_margin)}: ${d.closest_game}`]))
+      .on('mouseleave', () => tip.hide());
+  }
+
+  function drawHeat(el, matchups, standings) {
+    el.replaceChildren();
+    const card = document.getElementById('grid');
+    const tip = tipFor(card);
+    const rows = matchups.map(r => ({ ...r, week: Number(r.week), pf: Number(r.points_for), pa: Number(r.points_against) }));
+    const weeks = [...new Set(rows.map(r => r.week))].sort((a, b) => a - b);
+    el.style.gridTemplateColumns = `minmax(8rem, 1.7fr) repeat(${weeks.length}, minmax(max-content, 1fr)) minmax(max-content, 1fr)`;
+    const ext = d3.extent(rows, r => r.pf);
+    const pct = d3.scaleLinear(ext, [6, 56]);
+    const high = new Map(weeks.map(w => [w, d3.max(rows.filter(r => r.week === w), r => r.pf)]));
+    const div = (cls, text) => { const d = document.createElement('div'); d.className = cls; if (text != null) d.textContent = text; return d; };
+    el.appendChild(div('h l', 'Manager'));
+    weeks.forEach(w => el.appendChild(div('h', `Wk ${w}`)));
+    el.appendChild(div('h', 'Total'));
+    standings.forEach(s => {
+      const who = div('who');
+      const mn = div('m', s.manager); if (s.manager === ME) mn.textContent = `${s.manager} (you)`;
+      who.append(mn, div('t', s.team));
+      el.appendChild(who);
+      weeks.forEach(w => {
+        const r = rows.find(x => x.week === w && x.manager === s.manager);
+        const c = div('c');
+        if (!r) { el.appendChild(c); return; }
+        const where = `week=${w}&manager=${enc(s.manager)}`;
+        c.style.background = `color-mix(in srgb, ${col(0)} ${pct(r.pf).toFixed(0)}%, transparent)`;
+        const wl = mark('span', 'matchups', 'result', where, r.result);
+        wl.className = 'wl' + (r.result === 'W' ? ' w' : '');
+        const v = mark('span', 'matchups', 'points_for', where, f2(r.pf));
+        c.append(wl, v);
+        if (r.pf === high.get(w)) { const st = document.createElement('span'); st.className = 'star'; st.textContent = '★'; st.setAttribute('aria-label', 'Weekly high score'); c.appendChild(st); }
+        c.addEventListener('mousemove', (ev) => tip.show(ev, `Week ${w} · ${r.team}`, [
+          `${r.result === 'W' ? 'Beat' : 'Lost to'} ${r.opponent}, ${f2(r.pf)} to ${f2(r.pa)}`,
+          r.pf === high.get(w) ? 'Weekly high score ($45)' : `Margin ${fSigned(r.pf - r.pa)}`]));
+        c.addEventListener('mouseleave', () => tip.hide());
+        el.appendChild(c);
+      });
+      const tot = div('tot');
+      tot.appendChild(mark('span', 'standings', 'points_for', `manager=${enc(s.manager)}`, f2(s.points_for)));
+      el.appendChild(tot);
+    });
+  }
+
+  function fillRows(tbody, rows, cols, keyFn) {
+    tbody.replaceChildren();
+    rows.forEach(r => {
+      const tr = document.createElement('tr');
+      if (keyFn) tr.dataset.key = keyFn(r);
+      if (r.manager === ME) tr.className = 'me';
+      cols.forEach(([field, cls, fmt]) => {
+        const td = document.createElement('td');
+        td.className = cls || '';
+        const v = fmt ? fmt(r[field], r) : r[field];
+        if (v instanceof Node) td.appendChild(v); else td.textContent = v;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+  const pill = (t) => { const s = document.createElement('span'); s.className = 'fb-pill'; s.textContent = t; return s; };
+  const fDate = d3.utcFormat('%b %-d, %Y');
+
+  document.getElementById('lg-avg').style.background = col(2);
+  document.getElementById('lg-hi').style.background = col(0);
+
+  dash.onData(() => {
+    const seasonS = dash.data('season');
+    const standS = dash.data('standings');
+    const season = seasonS.status === 'ok' ? seasonS.data[0] : null;
+    drawKpis(season);
+
+    const take = document.getElementById('takeaway');
+    if (season && standS.status === 'ok') { take.classList.remove('dash-skeleton'); drawTake(take, standS.data, season); }
+    else { take.replaceChildren(); take.classList.toggle('dash-skeleton', standS.status === 'loading' || seasonS.status === 'loading'); }
+
+    const sb = document.getElementById('standings-box');
+    const st = gate(sb, ['standings']);
+    if (st) drawStandings(st[0]); else sb.querySelector('tbody').replaceChildren();
+
+    const lb = document.getElementById('luck-box');
+    const lc = lb.querySelector('.fb-chart');
+    const l = gate(lb, ['standings']);
+    if (l) drawLuck(lc, l[0]); else lc.replaceChildren();
+
+    const wb = document.getElementById('weekly-box');
+    const wc = wb.querySelector('.fb-chart');
+    const wk = gate(wb, ['weekly']);
+    if (wk) drawWeekly(wc, wk[0]); else wc.replaceChildren();
+
+    const hb = document.getElementById('heat-box');
+    const hc = hb.querySelector('.fb-heat');
+    const h = gate(hb, ['matchups', 'standings']);
+    if (h) drawHeat(hc, h[0], h[1]); else hc.replaceChildren();
+
+    const tb = document.getElementById('top-box');
+    const t = gate(tb, ['top_starters']);
+    const ttb = tb.querySelector('tbody');
+    if (t) {
+      const rows = t[0].slice().sort((a, b) => Number(b.points) - Number(a.points));
+      fillRows(ttb, rows, [
+        ['player', 'em'], ['pos', 'opt mut'], ['week', 'mut', v => `Wk ${v}`], ['manager', ''],
+        ['points', 'r em', v => f2(Number(v))], ['line', 'opt mut wrap']
+      ], r => `${enc(r.player)},${enc(String(r.week))}`);
+    } else ttb.replaceChildren();
+
+    const gb = document.getElementById('goose-box');
+    const ge = gate(gb, ['goose_eggs']);
+    const gtb = gb.querySelector('tbody');
+    if (ge) {
+      fillRows(gtb, ge[0], [
+        ['week', 'mut', v => `Wk ${v}`], ['player', 'em'], ['pos', 'opt mut'], ['manager', ''], ['note', 'opt mut wrap']
+      ], r => `${enc(String(r.week))},${enc(r.player)}`);
+    } else gtb.replaceChildren();
+
+    const lbx = document.getElementById('tl-box');
+    const tl = gate(lbx, ['timeline']);
+    const ltb = lbx.querySelector('tbody');
+    if (tl) {
+      const rows = tl[0].slice().sort((a, b) => a.date.localeCompare(b.date));
+      fillRows(ltb, rows, [
+        ['date', 'd', v => fDate(new Date(v))], ['phase', 'opt', v => pill(v)], ['event', 'wrap']
+      ], r => r.date);
+    } else ltb.replaceChildren();
+  });
+})();
+</script>
