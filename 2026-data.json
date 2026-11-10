@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T13:29:18Z",
+ "updated": "2026-11-10T13:32:39Z",
  "matchups": [
   {
    "week": 1,
@@ -864,6 +864,114 @@
    "points_for": 112.05,
    "points_against": 115.11,
    "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Joe",
+   "team": "POPPED HAMMYZ & ELBOWZ OH?",
+   "opponent": "Josh",
+   "points_for": 101.66,
+   "points_against": 94.3,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Josh",
+   "team": "Josh's Chubb",
+   "opponent": "Joe",
+   "points_for": 94.3,
+   "points_against": 101.66,
+   "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Jon",
+   "team": "Jon Goodman",
+   "opponent": "Zach",
+   "points_for": 130.09,
+   "points_against": 121.1,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Zach",
+   "team": "Choppy the flying game hen",
+   "opponent": "Jon",
+   "points_for": 121.1,
+   "points_against": 130.09,
+   "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Seth",
+   "team": "Jewish McCaffrey",
+   "opponent": "Jason",
+   "points_for": 101.65,
+   "points_against": 68.9,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Jason",
+   "team": "The OG JG",
+   "opponent": "Seth",
+   "points_for": 68.9,
+   "points_against": 101.65,
+   "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Babo",
+   "team": "Nabers in Paris",
+   "opponent": "Tom",
+   "points_for": 131.13,
+   "points_against": 116.89,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Tom",
+   "team": "Not auto drafting",
+   "opponent": "Babo",
+   "points_for": 116.89,
+   "points_against": 131.13,
+   "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Kevin",
+   "team": "Persona non grata",
+   "opponent": "Alex",
+   "points_for": 156.76,
+   "points_against": 124.87,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Alex",
+   "team": "Vrabel's Stable",
+   "opponent": "Kevin",
+   "points_for": 124.87,
+   "points_against": 156.76,
+   "result": "L"
+  },
+  {
+   "week": 9,
+   "manager": "Dan",
+   "team": "The Slim Reapers",
+   "opponent": "Andrew",
+   "points_for": 152.43,
+   "points_against": 125.52,
+   "result": "W"
+  },
+  {
+   "week": 9,
+   "manager": "Andrew",
+   "team": "TopicalNFLStory+Pun",
+   "opponent": "Dan",
+   "points_for": 125.52,
+   "points_against": 152.43,
+   "result": "L"
   }
  ],
  "top_starters": [
@@ -1090,6 +1198,20 @@
    "pos": "WR · LV",
    "manager": "Josh",
    "note": "Started a week after scoring 19.80 on Josh's bench"
+  },
+  {
+   "week": 9,
+   "player": "Ladd McConkey",
+   "pos": "WR · LAC",
+   "manager": "Jason",
+   "note": "Started, no stat line"
+  },
+  {
+   "week": 9,
+   "player": "Adonai Mitchell",
+   "pos": "WR · NYJ",
+   "manager": "Jason",
+   "note": "Started at flex, no stat line"
   }
  ],
  "timeline": [
@@ -1172,6 +1294,11 @@
    "date": "2026-11-03",
    "phase": "Recap",
    "event": "Week 8 recap (The Booth edition): Seth's 170.19 takes the $45; Josh's 47.24 misses the all-time low by 0.90"
+  },
+  {
+   "date": "2026-11-10",
+   "phase": "Recap",
+   "event": "Week 9 recap (Curb Your Kicker edition): Kevin's 156.76 takes the $45; Josh loses by 7.36 with an empty kicker slot"
   }
  ]
 }
