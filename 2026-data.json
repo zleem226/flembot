@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-13T19:29:22Z",
+ "updated": "2026-11-10T13:29:18Z",
  "matchups": [
   {
    "week": 1,
@@ -540,9 +540,341 @@
    "points_for": 131.49,
    "points_against": 162.67,
    "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Babo",
+   "team": "Nabers in Paris",
+   "opponent": "Dan",
+   "points_for": 128.69,
+   "points_against": 121.76,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Dan",
+   "team": "The Slim Reapers",
+   "opponent": "Babo",
+   "points_for": 121.76,
+   "points_against": 128.69,
+   "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Tom",
+   "team": "Not auto drafting",
+   "opponent": "Josh",
+   "points_for": 109.69,
+   "points_against": 87.19,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Josh",
+   "team": "Josh's Chubb",
+   "opponent": "Tom",
+   "points_for": 87.19,
+   "points_against": 109.69,
+   "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Joe",
+   "team": "POPPED HAMMYZ & ELBOWZ OH?",
+   "opponent": "Kevin",
+   "points_for": 139.76,
+   "points_against": 113.31,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Kevin",
+   "team": "Persona non grata",
+   "opponent": "Joe",
+   "points_for": 113.31,
+   "points_against": 139.76,
+   "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Alex",
+   "team": "Vrabel's Stable",
+   "opponent": "Jason",
+   "points_for": 108.05,
+   "points_against": 103.01,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Jason",
+   "team": "The OG JG",
+   "opponent": "Alex",
+   "points_for": 103.01,
+   "points_against": 108.05,
+   "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Andrew",
+   "team": "TopicalNFLStory+Pun",
+   "opponent": "Jon",
+   "points_for": 154.31,
+   "points_against": 113.16,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Jon",
+   "team": "Jon Goodman",
+   "opponent": "Andrew",
+   "points_for": 113.16,
+   "points_against": 154.31,
+   "result": "L"
+  },
+  {
+   "week": 6,
+   "manager": "Seth",
+   "team": "Jewish McCaffrey",
+   "opponent": "Zach",
+   "points_for": 131.15,
+   "points_against": 107.93,
+   "result": "W"
+  },
+  {
+   "week": 6,
+   "manager": "Zach",
+   "team": "Choppy the flying game hen",
+   "opponent": "Seth",
+   "points_for": 107.93,
+   "points_against": 131.15,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Seth",
+   "team": "Jewish McCaffrey",
+   "opponent": "Babo",
+   "points_for": 152.28,
+   "points_against": 141.45,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Babo",
+   "team": "Nabers in Paris",
+   "opponent": "Seth",
+   "points_for": 141.45,
+   "points_against": 152.28,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Andrew",
+   "team": "TopicalNFLStory+Pun",
+   "opponent": "Alex",
+   "points_for": 144.62,
+   "points_against": 111.41,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Alex",
+   "team": "Vrabel's Stable",
+   "opponent": "Andrew",
+   "points_for": 111.41,
+   "points_against": 144.62,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Zach",
+   "team": "Choppy the flying game hen",
+   "opponent": "Kevin",
+   "points_for": 111.32,
+   "points_against": 95.48,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Kevin",
+   "team": "Persona non grata",
+   "opponent": "Zach",
+   "points_for": 95.48,
+   "points_against": 111.32,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Joe",
+   "team": "POPPED HAMMYZ & ELBOWZ OH?",
+   "opponent": "Jon",
+   "points_for": 124.68,
+   "points_against": 122.39,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Jon",
+   "team": "Jon Goodman",
+   "opponent": "Joe",
+   "points_for": 122.39,
+   "points_against": 124.68,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Jason",
+   "team": "The OG JG",
+   "opponent": "Josh",
+   "points_for": 155.75,
+   "points_against": 105.4,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Josh",
+   "team": "Josh's Chubb",
+   "opponent": "Jason",
+   "points_for": 105.4,
+   "points_against": 155.75,
+   "result": "L"
+  },
+  {
+   "week": 7,
+   "manager": "Dan",
+   "team": "The Slim Reapers",
+   "opponent": "Tom",
+   "points_for": 117.93,
+   "points_against": 101.39,
+   "result": "W"
+  },
+  {
+   "week": 7,
+   "manager": "Tom",
+   "team": "Not auto drafting",
+   "opponent": "Dan",
+   "points_for": 101.39,
+   "points_against": 117.93,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Seth",
+   "team": "Jewish McCaffrey",
+   "opponent": "Tom",
+   "points_for": 170.19,
+   "points_against": 80.37,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Tom",
+   "team": "Not auto drafting",
+   "opponent": "Seth",
+   "points_for": 80.37,
+   "points_against": 170.19,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Andrew",
+   "team": "TopicalNFLStory+Pun",
+   "opponent": "Josh",
+   "points_for": 158.68,
+   "points_against": 47.24,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Josh",
+   "team": "Josh's Chubb",
+   "opponent": "Andrew",
+   "points_for": 47.24,
+   "points_against": 158.68,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Jason",
+   "team": "The OG JG",
+   "opponent": "Dan",
+   "points_for": 146.54,
+   "points_against": 134.56,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Dan",
+   "team": "The Slim Reapers",
+   "opponent": "Jason",
+   "points_for": 134.56,
+   "points_against": 146.54,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Alex",
+   "team": "Vrabel's Stable",
+   "opponent": "Joe",
+   "points_for": 136.16,
+   "points_against": 105.52,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Joe",
+   "team": "POPPED HAMMYZ & ELBOWZ OH?",
+   "opponent": "Alex",
+   "points_for": 105.52,
+   "points_against": 136.16,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Kevin",
+   "team": "Persona non grata",
+   "opponent": "Jon",
+   "points_for": 122.18,
+   "points_against": 97.07,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Jon",
+   "team": "Jon Goodman",
+   "opponent": "Kevin",
+   "points_for": 97.07,
+   "points_against": 122.18,
+   "result": "L"
+  },
+  {
+   "week": 8,
+   "manager": "Babo",
+   "team": "Nabers in Paris",
+   "opponent": "Zach",
+   "points_for": 115.11,
+   "points_against": 112.05,
+   "result": "W"
+  },
+  {
+   "week": 8,
+   "manager": "Zach",
+   "team": "Choppy the flying game hen",
+   "opponent": "Babo",
+   "points_for": 112.05,
+   "points_against": 115.11,
+   "result": "L"
   }
  ],
  "top_starters": [
+  {
+   "player": "Joe Burrow",
+   "pos": "QB",
+   "week": 8,
+   "manager": "Zach",
+   "points": 56.05,
+   "line": "462 yards, 5 passing TDs and the OT-winning rushing TD, in a loss"
+  },
   {
    "player": "Drake Maye",
    "pos": "QB",
@@ -608,6 +940,14 @@
    "line": "155 yards, 3 TDs, career-long 82-yarder"
   },
   {
+   "player": "Trevor Lawrence",
+   "pos": "QB",
+   "week": 6,
+   "manager": "Seth",
+   "points": 38.75,
+   "line": "306 yards and 4 TDs in a 34-31 walk-off loss"
+  },
+  {
    "player": "Brock Purdy",
    "pos": "QB",
    "week": 3,
@@ -622,22 +962,6 @@
    "manager": "Alex",
    "points": 38.2,
    "line": "151 rushing yards, 2 TDs, passed Barry Sanders"
-  },
-  {
-   "player": "Jahmyr Gibbs",
-   "pos": "RB",
-   "week": 3,
-   "manager": "Alex",
-   "points": 37.9,
-   "line": "3 second-half TDs, all against the Jets"
-  },
-  {
-   "player": "Derrick Henry",
-   "pos": "RB",
-   "week": 1,
-   "manager": "Zach",
-   "points": 37.8,
-   "line": "144 yards, 3 TDs"
   }
  ],
  "goose_eggs": [
@@ -703,6 +1027,69 @@
    "pos": "WR · JAX",
    "manager": "Josh",
    "note": "0 catches on 3 targets, including an end-zone drop"
+  },
+  {
+   "week": 6,
+   "player": "Cam Skattebo",
+   "pos": "RB · NYG",
+   "manager": "Dan",
+   "note": "Active, played six snaps, zero touches; decided a 6.93-point loss"
+  },
+  {
+   "week": 6,
+   "player": "Juwan Johnson",
+   "pos": "TE · NO",
+   "manager": "Joe",
+   "note": "Started at tight end; Joe scored 139.76 anyway"
+  },
+  {
+   "week": 7,
+   "player": "Christian Kirk",
+   "pos": "WR · SF",
+   "manager": "Joe",
+   "note": "20 snaps, zero targets; his only bench WR was on bye, and Joe won anyway"
+  },
+  {
+   "week": 8,
+   "player": "Zay Flowers",
+   "pos": "WR · BAL",
+   "manager": "Joe",
+   "note": "Third straight week Joe started a zero"
+  },
+  {
+   "week": 8,
+   "player": "Omar Cooper Jr.",
+   "pos": "WR · NYJ",
+   "manager": "Zach",
+   "note": "Played and got zero targets"
+  },
+  {
+   "week": 8,
+   "player": "Chris Godwin",
+   "pos": "WR · TB",
+   "manager": "Jon",
+   "note": "Baker Mayfield went 0 for 3 in a monsoon"
+  },
+  {
+   "week": 8,
+   "player": "Lamar Jackson",
+   "pos": "QB · BAL",
+   "manager": "Josh",
+   "note": "Hurt his thumb on his first snap; headed to IR"
+  },
+  {
+   "week": 8,
+   "player": "Emanuel Wilson",
+   "pos": "RB · SEA",
+   "manager": "Josh",
+   "note": "One of three Josh starters at 0.00"
+  },
+  {
+   "week": 8,
+   "player": "Tre Tucker",
+   "pos": "WR · LV",
+   "manager": "Josh",
+   "note": "Started a week after scoring 19.80 on Josh's bench"
   }
  ],
  "timeline": [
@@ -770,6 +1157,21 @@
    "date": "2026-10-13",
    "phase": "Recap",
    "event": "Week 5 recap (Aeneid edition): Joe takes his second $45; Babo is 4-1 with the fewest points in the league"
+  },
+  {
+   "date": "2026-10-20",
+   "phase": "Recap",
+   "event": "Week 6 recap (Werner Herzog edition): Andrew's 154.31 is the lowest weekly high score of the season"
+  },
+  {
+   "date": "2026-10-27",
+   "phase": "Recap",
+   "event": "Week 7 recap (Pine Barrens edition): Jason's 155.75 wins his second $45; Joe starts a 0.00 again and goes 6-1"
+  },
+  {
+   "date": "2026-11-03",
+   "phase": "Recap",
+   "event": "Week 8 recap (The Booth edition): Seth's 170.19 takes the $45; Josh's 47.24 misses the all-time low by 0.90"
   }
  ]
 }
